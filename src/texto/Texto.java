@@ -103,7 +103,7 @@ public class Texto {
         doc.setCharacterAttributes(0, doc.getLength(), attrs, false);
     }
 
-    // Metodos del patrón Memento
+    // Metodos del patron Memento
     public MementoInterfaz crearMemento() {
         contenido = editorTexto.getText();
         return new Memento(contenido, fuenteActual, size);
