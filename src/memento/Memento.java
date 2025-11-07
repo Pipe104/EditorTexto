@@ -1,6 +1,6 @@
 package memento;
 
-public class Memento {
+public class Memento implements MementoInterfaz {
     private final String contenido;
     private final String fuente;
     private final int size;

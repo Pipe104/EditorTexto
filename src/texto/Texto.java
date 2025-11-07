@@ -13,9 +13,7 @@ public class Texto {
     private JFrame frame;
     private JTextPane editorTexto;
     private String fuenteActual = "Arial";
-    private int size = 10;
-
-    private final Caretaker caretaker = new Caretaker();
+    private int size = 14;
 
     public Texto(FuenteFlyweight fuente) {
         inicializarFrame(fuente);
@@ -43,28 +41,14 @@ public class Texto {
         label.setFont(new Font("Arial", Font.PLAIN, size));
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Boton Guardar 
-        JButton btnGuardar = new JButton("Guardar estado");
-        btnGuardar.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btnGuardar.addActionListener(e -> guardar());
-
-        // Boton Deshacer
-        JButton btnDeshacer = new JButton("Deshacer");
-        btnDeshacer.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btnDeshacer.addActionListener(e -> restaurar());
-
         panelCentral.add(Box.createVerticalGlue());
         panelCentral.add(scrollPane);
-        panelCentral.add(Box.createVerticalStrut(10));
-        panelCentral.add(btnGuardar);
-        panelCentral.add(Box.createVerticalStrut(10));
-        panelCentral.add(btnDeshacer);
         panelCentral.add(Box.createVerticalStrut(20));
         panelCentral.add(label);
         panelCentral.add(Box.createVerticalGlue());
         frame.add(panelCentral, BorderLayout.CENTER);
 
-        // Panel inferior de fuente y size 
+        // Panel inferior de fuente y size
         JPanel panelInferior = new JPanel();
         panelInferior.setLayout(new BoxLayout(panelInferior, BoxLayout.Y_AXIS));
 
@@ -119,26 +103,20 @@ public class Texto {
         doc.setCharacterAttributes(0, doc.getLength(), attrs, false);
     }
 
-   
-
-    public void guardar() {
+    // Metodos del patrón Memento
+    public MementoInterfaz crearMemento() {
         contenido = editorTexto.getText();
-        Memento m = new Memento(contenido, fuenteActual, size);
-        caretaker.guardar(m);
-        System.out.println("Estado guardado: " + fuenteActual + ", tamaño " + size);
+        return new Memento(contenido, fuenteActual, size);
     }
 
-    public void restaurar() {
-        Memento m = caretaker.deshacer();
-        if (m != null) {
-            this.contenido = m.getContenido();
-            this.fuenteActual = m.getFuente();
-            this.size = m.getSize();
+    public void restaurar(MementoInterfaz m) {
+        if (m instanceof Memento) {
+            Memento estado = (Memento) m;
+            this.contenido = estado.getContenido();
+            this.fuenteActual = estado.getFuente();
+            this.size = estado.getSize();
             editorTexto.setText(contenido);
             aplicarCambios();
-            System.out.println("Estado restaurado: " + fuenteActual + ", tamaño " + size);
-        } else {
-            System.out.println("No hay estados previos para deshacer.");
         }
     }
 }

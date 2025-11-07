@@ -1,25 +1,18 @@
 package memento;
 
-import java.util.ArrayList;
+import java.util.Stack;
 
 public class Caretaker {
-    private final ArrayList<Memento> historial = new ArrayList<>();
+    private final Stack<MementoInterfaz> historial = new Stack<>();
 
-    public void guardar(Memento memento) {
-        historial.add(memento);
+    public void guardar(MementoInterfaz m) {
+        historial.push(m);
     }
 
-    public Memento deshacer() {
+    public MementoInterfaz deshacer() {
         if (!historial.isEmpty()) {
-            historial.remove(historial.size() - 1);
-            if (!historial.isEmpty()) {
-                return historial.get(historial.size() - 1);
-            }
+            return historial.pop();
         }
         return null;
-    }
-
-    public boolean tieneHistorial() {
-        return !historial.isEmpty();
     }
 }
