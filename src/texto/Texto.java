@@ -43,12 +43,12 @@ public class Texto {
         label.setFont(new Font("Arial", Font.PLAIN, size));
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Botón Guardar (crea un Memento)
+        // Boton Guardar 
         JButton btnGuardar = new JButton("Guardar estado");
         btnGuardar.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnGuardar.addActionListener(e -> guardar());
 
-        // Botón Deshacer (restaura último Memento)
+        // Boton Deshacer
         JButton btnDeshacer = new JButton("Deshacer");
         btnDeshacer.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnDeshacer.addActionListener(e -> restaurar());
@@ -64,7 +64,7 @@ public class Texto {
         panelCentral.add(Box.createVerticalGlue());
         frame.add(panelCentral, BorderLayout.CENTER);
 
-        // Panel inferior (fuentes y tamaños)
+        // Panel inferior de fuente y size 
         JPanel panelInferior = new JPanel();
         panelInferior.setLayout(new BoxLayout(panelInferior, BoxLayout.Y_AXIS));
 
@@ -119,7 +119,7 @@ public class Texto {
         doc.setCharacterAttributes(0, doc.getLength(), attrs, false);
     }
 
-    // === MÉTODOS MEMENTO ===
+   
 
     public void guardar() {
         contenido = editorTexto.getText();
